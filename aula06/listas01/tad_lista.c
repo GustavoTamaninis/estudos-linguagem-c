@@ -53,7 +53,7 @@ int full(struct List_ *list){
 }
 
 int insert_Head(struct List_ *list, int value){
-    if(list == NULL || full(list)) return 1;  
+    if(list == NULL || full(list) || list->fim == 0) return 1;  
 
     int i;
     for(i = list->fim; i > 0; i--){
@@ -67,7 +67,7 @@ int insert_Head(struct List_ *list, int value){
 }
 
 int insert_Tail(struct List_ *list, int value){
-    if(list == NULL || full(list)) return 1;
+    if(list == NULL || full(list) || list->fim == 0) return 1;
     list->vetor[list->fim] = value;
     list->fim++; //de repente puxar pra cima este e ajustar o código (DEPOIS) -> confira o insert_Head tbm.
 
