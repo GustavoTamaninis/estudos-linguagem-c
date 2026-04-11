@@ -1,0 +1,14 @@
+typedef struct List_ List;
+List* create(int length);
+int list_Head(List *list, int *value);
+int list_Tail(List *list, int *value);
+int list_position(List *list, int position, int *value);
+int insert_Head(List *list, int value);
+int insert_Tail(List *list, int value);
+int insert_position(List *list, int position, int value);
+int remove_Head(List *list, int *value);
+int remove_Tail(List *list, int *value);
+int remove_position(List *list, int position, int *value);
+int size(List *list);
+int full(List *list);
+void destroy(List *list);
