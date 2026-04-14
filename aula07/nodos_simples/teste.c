@@ -7,6 +7,11 @@ int main(){
 
     printf("O meu primeiro nó contém o número %d\n", get_info(n));
     set_next(n, n_2);
-    printf("O próximo nó possui o endereço %d\n", get_next(n));
+    printf("O próximo nó possui o endereço %p\n", get_next(n));
+    printf("e o valor desse segundo nó é %d\n", get_info(n_2));
+    printf("---------");
+    printf("posso também pegar o valor do segundo através do endereço do primeiro: %d", get_info(get_next(n)));
+
     destroy(n);
+    destroy(n_2);
 }
