@@ -54,7 +54,7 @@ int main(){
     printf("\n");
 
     
-    printf("Selection Sort em Lista Encadeada:\n");
+    printf("Selection Sort em Lista Encadeada\n");
     struct Node{
         int info;
         struct Node *next;
@@ -81,64 +81,71 @@ int main(){
 
     Node * cursor = inicio;
     for(int i = 0; i < 5; i++){
-        int menor = cursor->info;
-        int im = i;
+        Node * menor = cursor;
+        Node * cursor_2 = cursor->next;
         for(int j = i + 1; j < 5; j++){
-            int temp = cursor->info;
-            cursor->info = cursor->next->info;
-            cursor->next->info = temp;
-            if(cursor->info < menor){
-                menor = cursor->info;
-                im = j;
+            if(cursor_2->info < menor->info){
+                menor = cursor_2;
             }
+            cursor_2 = cursor_2->next;
         }
-        // for(int j; j <= im; j++){
-        //     cursor->info = cursor->next->info;
-        //     cursor->next->info = temp;
-        //     if(i = j)
-        // }
+        int temp = cursor->info;
+        cursor->info = menor->info;
+        menor->info = temp;
 
-        for(int k = 0; k < 5; k++) printf("Na posição %d está o valor %d\n", k, cursor->info);
+        Node * cursor_3 = inicio;
+        for(int j = 0; j < 5; j++){
+            printf("Na posição %d está o valor %d\n", j, cursor_3->info);
+            if(j != 4) cursor_3 = cursor_3->next;
+        }
+        if(i != 4) cursor = cursor->next;
         printf("\n");
     }
     printf("\n");
 
 
-    // printf("Selection Sort decrescente em Lista Encadeada:\n");
-    // Node n1_dec = {50, NULL};
-    // Node n2_dec = {10, NULL};
-    // Node n3_dec = {40, NULL};
-    // Node n4_dec = {80, NULL};
-    // Node n5_dec = {20, NULL};
+    printf("Selection Sort decrescente em Lista Encadeada:\n");
+    Node n1_dec = {50, NULL};
+    Node n2_dec = {10, NULL};
+    Node n3_dec = {40, NULL};
+    Node n4_dec = {80, NULL};
+    Node n5_dec = {20, NULL};
 
-    // n1_dec.next = &n2_dec;
-    // n2_dec.next = &n3_dec;
-    // n3_dec.next = &n4_dec;
-    // n4_dec.next = &n5_dec;
+    n1_dec.next = &n2_dec;
+    n2_dec.next = &n3_dec;
+    n3_dec.next = &n4_dec;
+    n4_dec.next = &n5_dec;
 
-    // Node *inicio_dec = &n1_dec;
+    Node *inicio_dec = &n1_dec;
 
-    // printf("Lista encadeada criada:\n");
-    // for(Node *atual = inicio_dec; atual != NULL; atual = atual->next){
-    //     printf("%d\n", atual->info);
-    // }
+    printf("Lista encadeada decrescente criada:\n");
+    for(Node * atual = inicio; atual != NULL; atual = atual->next){
+        printf("%d\n", atual->info);
+    }
 
-    // while(true){
-    //     bool trocou = false;
-    //     Node * cursor = inicio_dec;
-    //     for(int i = 0; i < 5; i++){
-    //         if(i != 4 && cursor->info < cursor->next->info){
-    //             int temp = cursor->info;
-    //             cursor->info = cursor->next->info;
-    //             cursor->next->info = temp;
-    //             trocou = true;
-    //         }
-    //         printf("Na posição %d está o valor %d\n", i, cursor->info);
-    //         if(i != 4) cursor = cursor->next;
-    //     }
-    //     printf("\n");
-    //     if(trocou == false) break;
-    // }
+    Node * cursor_dec = inicio;
+    for(int i = 0; i < 5; i++){
+        Node * maior = cursor_dec;
+        Node * cursor_dec_2 = cursor_dec->next;
+        for(int j = i + 1; j < 5; j++){
+            if(cursor_dec_2->info > maior->info){
+                maior = cursor_dec_2;
+            }
+            cursor_dec_2 = cursor_dec_2->next;
+        }
+        int temp = cursor_dec->info;
+        cursor_dec->info = maior->info;
+        maior->info = temp;
+
+        Node * cursor_dec_3 = inicio;
+        for(int j = 0; j < 5; j++){
+            printf("Na posição %d está o valor %d\n", j, cursor_dec_3->info);
+            if(j != 4) cursor_dec_3 = cursor_dec_3->next;
+        }
+        if(i != 4) cursor_dec = cursor_dec->next;
+        printf("\n");
+    }
+    printf("\n");
 
 
     return 0;
