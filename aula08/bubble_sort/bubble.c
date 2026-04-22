@@ -89,6 +89,7 @@ int main(){
         if(trocou == false) break;
     }
 
+    
     printf("Bubble Sort decrescente em Lista Encadeada:\n");
     Node n1_dec = {50, NULL};
     Node n2_dec = {10, NULL};

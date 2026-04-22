@@ -1,0 +1,1 @@
+void insertionSort(int * lista, int tamanho);
