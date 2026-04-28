@@ -1,8 +1,7 @@
 #include "cliente.h"
-
-typedef struct Node_ Nodo;
+typedef struct Nodo_ Nodo;
 
 Nodo * cria_nodo(Cliente * cliente);
 void set_nodo_next(Nodo * nodo, Nodo * next);
-Cliente * get_next(Nodo * nodo);
-Nodo * get_data(Nodo * nodo);
+Nodo * get_next(Nodo * nodo);
+Cliente * get_data(Nodo * nodo);

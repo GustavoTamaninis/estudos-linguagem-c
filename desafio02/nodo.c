@@ -10,19 +10,18 @@ Nodo * cria_nodo(Cliente * cliente){
     if(nodo == NULL) return NULL;
     nodo->cliente = cliente;
     nodo->next = NULL;
-
-    return NULL;
+    return nodo;
 }
 
 void set_nodo_next(Nodo * nodo, Nodo * next){
     nodo->next = next;
 }
 
-Cliente * get_next(Nodo * nodo){
+Nodo * get_next(Nodo * nodo){
     return nodo->next;
 }
 
-Nodo * get_data(Nodo * nodo){
-    return nodo->cliente; //passar um nodo na verdade
+Cliente * get_data(Nodo * nodo){
+    return nodo->cliente;
 }
 
