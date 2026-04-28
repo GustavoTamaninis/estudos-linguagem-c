@@ -59,8 +59,8 @@ População das hashtables com os clientes criados:
 /*-------------------------------------------------------------------------------------------------
 Recuperação de clientes usando nome como chave de busca
 -------------------------------------------------------------------------------------------------*/
-    Lista *lista = recupera_cliente(estrutura, 1, 0, "Vanessa");
-    if((lista) > 0) {
+    Lista * lista = recupera_cliente(estrutura, 1, 0, "Vanessa");
+    if((lista) != NULL) {
         printf("Clientes com nome Vanessa [1]:\n");
         Nodo *cursor = get_inicio(lista);
         while(cursor != NULL) {

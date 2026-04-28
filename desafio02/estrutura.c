@@ -79,45 +79,91 @@ int calc_indice_renda(Estrutura * estrutura, double renda){
 }
 
 void insere_cliente(Estrutura * estrutura, int chave, Cliente * cliente){
-    if(estrutura == NULL) estrutura = cria_estrutura();
-    if(cliente != NULL){
-        Nodo * nodo = cria_nodo(cliente);
-        if(chave == 1){
-            int indice = calc_indice_nome(estrutura, get_nome(cliente));
-            if(indice != -1) insere_na_lista(estrutura->lista_nomes, indice, nodo);
-        }else if(chave == 2){
-            int indice = calc_indice_bairro(estrutura, get_bairro(cliente));
-            if(indice != -1) insere_na_lista(estrutura->lista_bairros, indice, nodo);
-        }else if(chave == 3){
-            int indice = calc_indice_pessoas(estrutura, get_pessoas(cliente));
-            if(indice != -1)insere_na_lista(estrutura->lista_pessoas, indice, nodo);
-        }else if(chave == 4){
-            int indice = calc_indice_criancas(estrutura, get_criancas(cliente));
-            if(indice != -1) insere_na_lista(estrutura->lista_criancas, indice, nodo);
-        }else if(chave == 5){
-            int indice = calc_indice_renda(estrutura, get_renda(cliente));
-            if(indice != -1) insere_na_lista(estrutura->lista_renda, indice, nodo);
-        }
+    if(estrutura == NULL){
+        estrutura = cria_estrutura();
+        if(estrutura == NULL) return;
+    }
+    if(cliente == NULL) return;
+    Nodo * nodo = cria_nodo(cliente);
+    if(nodo == NULL) return;
+
+    if(chave == 1){
+        int indice = calc_indice_nome(estrutura, get_nome(cliente));
+        if(indice != -1) insere_na_lista(estrutura->lista_nomes, indice, nodo);
+    }else if(chave == 2){
+        int indice = calc_indice_bairro(estrutura, get_bairro(cliente));
+        if(indice != -1) insere_na_lista(estrutura->lista_bairros, indice, nodo);
+    }else if(chave == 3){
+        int indice = calc_indice_pessoas(estrutura, get_pessoas(cliente));
+        if(indice != -1) insere_na_lista(estrutura->lista_pessoas, indice, nodo);
+    }else if(chave == 4){
+        int indice = calc_indice_criancas(estrutura, get_criancas(cliente));
+        if(indice != -1) insere_na_lista(estrutura->lista_criancas, indice, nodo);
+    }else if(chave == 5){
+        int indice = calc_indice_renda(estrutura, get_renda(cliente));
+        if(indice != -1) insere_na_lista(estrutura->lista_renda, indice, nodo);
     }
 }
 
 Lista * recupera_cliente(Estrutura * estrutura, int criterio, int complemento, char * busca){
-    //AINDA TO FAZENDO ESSA PARTE, EU SEI QUE TÁ ERRADA
     if(estrutura == NULL) return NULL;
-    if(criterio < 0 || criterio > 5) return NULL;
-    int indice;
-    if(criterio == 1){
-        indice = calc_indice_nome(estrutura, busca);
-        Nodo * cursor = get_inicio(estrutura->lista_nomes);
-        while(get_next(cursor) != NULL){
-            char * nome_lista = get_nome(cursor);
-            if(strcmp(get_data(cursor), busca)) ;
+    if(criterio < 1 || criterio > 5) return NULL;
+
+    if(criterio == 1 || criterio == 2){
+        if(busca == NULL) return NULL;
+        int indice = (criterio == 1)
+            ? calc_indice_nome(estrutura, busca)
+            : calc_indice_bairro(estrutura, busca);
+        if(indice < 0) return NULL;
+
+        Lista * buckets = (criterio == 1) ? estrutura->lista_nomes : estrutura->lista_bairros;
+        Lista * bucket = get_lista_bucket(buckets, estrutura->t_lista, indice);
+        if(bucket == NULL) return NULL;
+
+        Lista * resultado = cria_listas(1);
+        if(resultado == NULL) return NULL;
+
+        Nodo * cursor = get_inicio(bucket);
+        while(cursor != NULL){
+            Cliente * cliente = get_data(cursor);
+            const char * valor = (criterio == 1) ? get_nome(cliente) : get_bairro(cliente);
+            if(valor != NULL && strcmp(valor, busca) == 0){
+                Nodo * novo = cria_nodo(cliente);
+                if(novo != NULL) insere_na_lista(resultado, 0, novo);
+            }
+            cursor = get_next(cursor);
         }
-        return estrutura->lista_nomes[indice];
+        return resultado;
     }
+
+    if(criterio == 3){
+        int indice = calc_indice_pessoas(estrutura, complemento);
+        if(indice < 0) return NULL;
+        return get_lista_bucket(estrutura->lista_pessoas, estrutura->t_lista, indice);
+    }
+
+    if(criterio == 4){
+        int indice = calc_indice_criancas(estrutura, complemento);
+        if(indice < 0) return NULL;
+        return get_lista_bucket(estrutura->lista_criancas, estrutura->t_lista, indice);
+    }
+
+    if(criterio == 5){
+        if(complemento < 1 || complemento > 4) return NULL;
+        int indice = complemento % estrutura->t_lista;
+        return get_lista_bucket(estrutura->lista_renda, estrutura->t_lista, indice);
+    }
+
+    return NULL;
 }
 
 void libera_estrutura(Estrutura * estrutura){
+    if(estrutura == NULL) return;
+    libera_listas(estrutura->lista_nomes, estrutura->t_lista);
+    libera_listas(estrutura->lista_bairros, estrutura->t_lista);
+    libera_listas(estrutura->lista_pessoas, estrutura->t_lista);
+    libera_listas(estrutura->lista_criancas, estrutura->t_lista);
+    libera_listas(estrutura->lista_renda, estrutura->t_lista);
     free(estrutura->lista_nomes);
     free(estrutura->lista_bairros);
     free(estrutura->lista_pessoas);
